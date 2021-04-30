@@ -22,8 +22,8 @@ EOF
 
 sudo -u ec2-user -i <<'EOF'
 # To be executed at each start-up to ensure replication of conda envs in Conda & in Jupyter
-if [ -d "${PERSISTED_CONDA_DIR}" ]; then
-  for env in "${PERSISTED_CONDA_DIR}/*"; do
+if [ -d "/home/ec2-user/SageMaker/.persisted_conda" ]; then
+  for env in ~/SageMaker/.persisted_conda/*; do
 # Exporting conda env to Jupyter Notebook kernel
       python -m ipykernel install --user --name $(basename "$env") --display-name "$(basename "$env")"
 done
