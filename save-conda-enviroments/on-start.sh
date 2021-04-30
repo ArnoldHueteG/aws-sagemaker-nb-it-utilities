@@ -19,3 +19,13 @@ envs_dirs:
   - ${PERSISTED_CONDA_DIR}
   - /home/ec2-user/anaconda3/envs
 EOF
+
+sudo -u ec2-user -i <<'EOF'
+# To be executed at each start-up to ensure replication of conda envs in Conda & in Jupyter
+if [ -d "/home/ec2-user/SageMaker/.persisted_conda" ]; then
+  for env in ~/SageMaker/.persisted_conda/*; do
+# Exporting conda env to Jupyter Notebook kernel
+      python -m ipykernel install --user --name $(basename "$env") --display-name "$(basename "$env")"
+done
+fi
+EOF
