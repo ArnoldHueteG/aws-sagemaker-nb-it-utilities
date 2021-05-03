@@ -19,7 +19,7 @@ envs_dirs:
   - ${PERSISTED_CONDA_DIR}
   - /home/ec2-user/anaconda3/envs
 EOF
-
+echo "Adding ${PERSISTED_CONDA_DIR} to jupyter"
 sudo -u ec2-user -i <<'EOF'
 # To be executed at each start-up to ensure replication of conda envs in Conda & in Jupyter
 if [ -d "/home/ec2-user/SageMaker/.persisted_conda" ]; then
