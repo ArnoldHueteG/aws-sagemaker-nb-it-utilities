@@ -1,3 +1,4 @@
+
 NOW=$(date '+%Y%m%dT%H%M%S')
 CONFIGURATION_NAME="holanube-sagemaker-lifecycle-${NOW}"
 echo $CONFIGURATION_NAME
