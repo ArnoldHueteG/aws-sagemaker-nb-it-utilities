@@ -18,13 +18,15 @@ aws sagemaker update-notebook-instance-lifecycle-config \
     --notebook-instance-lifecycle-config-name "$CONFIGURATION_NAME" \
     --on-start Content="$((cat on-start.sh)| base64)"
 
+aws iam create-policy --policy-name sagemaker-autostop-${NOW} --policy-document file://policies/autostop-policy.json
+
 aws iam create-role --path "/service-role/" \
 --role-name AmazonSageMaker-ExecutionRole-${NOW} \
---assume-role-policy-document file://trustpolicy.json
+--assume-role-policy-document file://policies/trustpolicy.json
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AWSGlueServiceNotebookRole --role-name AmazonSageMaker-ExecutionRole-${NOW}
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonSageMakerFullAccess --role-name AmazonSageMaker-ExecutionRole-${NOW}
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess --role-name AmazonSageMaker-ExecutionRole-${NOW}
-aws iam attach-role-policy --policy-arn arn:aws:iam::380245089291:policy/sagemaker-autostop --role-name AmazonSageMaker-ExecutionRole-${NOW}
+aws iam attach-role-policy --policy-arn arn:aws:iam::380245089291:policy/sagemaker-autostop-${NOW} --role-name AmazonSageMaker-ExecutionRole-${NOW}
 
 INSTANCE_NAME="holanube-sagemaker-instance-${NOW}"
 INSTANCE_TYPE="ml.t2.medium"
@@ -38,4 +40,3 @@ aws sagemaker create-notebook-instance \
     --lifecycle-config-name "${CONFIGURATION_NAME}" \
     --volume-size-in-gb 20
 
-aws iam create-policy --policy-name sagemaker-autostop-${NOW} --policy-document file://autostop-policy.json
