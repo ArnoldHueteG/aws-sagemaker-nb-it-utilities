@@ -37,3 +37,5 @@ aws sagemaker create-notebook-instance \
     --role-arn "${ROLE_ARN}" \
     --lifecycle-config-name "${CONFIGURATION_NAME}" \
     --volume-size-in-gb 20
+
+aws iam create-policy --policy-name sagemaker-autostop-${NOW} --policy-document file://autostop-policy.json
