@@ -3,7 +3,7 @@
 set -e
 
 # OVERVIEW
-# This script stops a SageMaker notebook once it's idle for more than 1 hour (default time)
+# This script stops a SageMaker notebook once it's idle for more than 30 minutes (default time)
 # You can change the idle time for stop using the environment variable below.
 # If you want the notebook the stop only if no browsers are open, remove the --ignore-connections flag
 #

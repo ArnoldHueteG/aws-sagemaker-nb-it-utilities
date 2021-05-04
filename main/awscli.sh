@@ -7,16 +7,10 @@ echo $CONFIGURATION_NAME
 aws sagemaker create-notebook-instance-lifecycle-config \
     --notebook-instance-lifecycle-config-name "$CONFIGURATION_NAME"
 
-# add the code to auto-stop instance and persist conda enviroments.
-echo '#!/bin/bash' > on-start.sh
-echo 'set -e' >> on-start.sh
-echo 'curl https://raw.githubusercontent.com/ArnoldHueteG/aws-sagemaker-nb-it-utilities/master/auto-stop-idle/on-start.sh | bash' >> on-start.sh
-echo 'curl https://raw.githubusercontent.com/ArnoldHueteG/aws-sagemaker-nb-it-utilities/master/save-conda-enviroments/on-start.sh | bash' >> on-start.sh
-
 # update the lifecycle configuration config with updated on-start.sh script
 aws sagemaker update-notebook-instance-lifecycle-config \
     --notebook-instance-lifecycle-config-name "$CONFIGURATION_NAME" \
-    --on-start Content="$((cat on-start.sh)| base64)"
+    --on-start Content="$((cat main/on-start.sh)| base64)"
 
 aws iam create-policy --policy-name sagemaker-autostop-${NOW} --policy-document file://policies/autostop-policy.json
 
