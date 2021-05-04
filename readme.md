@@ -12,6 +12,7 @@ cd aws-sagemaker-nb-it-utilities
 bash main/awscli.sh
 ```
 
+## How it works?
 The shell script "awscli.sh" will going to make this steps:
 1. Create a lifecycle configuration named "holanube-sagemaker-lifecycle-YYYYMMMDDThhmmss".
 2. Add a on-start.sh file to lifecycle configuration.
